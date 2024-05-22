@@ -1,0 +1,12 @@
+Q1. How can we design the system in a way that every Company will be able to serve games on their gaming site from their domain?
+A.  Each gaming compnay can have Unique identifyer like tenant_id, for isolate data and requests, and that tenant_id will be associated to site.
+
+Q2. What modification should be done to the users table at gPlatform to support this change? 
+A.  We need to add tenant_id col: Modify the users table to include a tenant_id column that references the gaming company the user belongs to.
+    By this way, each user is associated with a specific company.
+
+Q3. Considering we have 1 backend cluster that serves all companies, how can we validate a user login on one gaming domain in such a way that it does not give access to a different gaming domain?
+    (i.e. authenticating on site A, grants access to site A only)
+A. 1. Get domain from request and identify tenant_id by domain. 
+   2. Next step is user lookup. like email = 'user@test.com' AND tenant_id = '15 for cool-games.com'. ... 
+   3. Create access token which will include tenant_id ...
